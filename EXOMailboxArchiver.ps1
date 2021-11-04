@@ -1,3 +1,21 @@
+<#PSScriptInfo
+.VERSION 1.0.0
+.AUTHOR ShellGibson
+.DESCRIPTION Gather device hash from local machine and automatically upload it to Autopilot
+.TAGS Exchange Online Archive
+.LICENSEURI
+.PROJECTURI https://github.com/ShellGibson/exo-mailbox-archiver/edit/main/EXOMailboxArchiver.ps1
+#>
+# Requires -Module ExchangeOnlineManagement 
+
+Write-Host "
+         	* OPTIONS *          
+[1] Enable archive for all mailboxes        
+[2] Disable archive for all mailboxes       
+" -ForegroundColor Yellow
+
+$Options = Read-Host
+
 # Check ExchangeOnlineManagement is installed.
 Write-Output "Checking ExchangeOnlineManagement is installed..."
 $IsInstalled = Get-InstalledModule -Name ExchangeOnlineManagement
@@ -16,13 +34,7 @@ if ($IsConnected -ne "True") {
     Connect-ExchangeOnline
 }
 
-Write-Host "
-         	* OPTIONS *          
-[1] Enable archive for all mailboxes        
-[2] Disable archive for all mailboxes       
-" -ForegroundColor Yellow
 
-$Options = Read-Host
 
 $Results = Get-Mailbox -ResultSize unlimited 
 $Alias = Write-Output $Results.Alias
